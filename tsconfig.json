@@ -4,10 +4,16 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "esnext",
+      "DOM",
+      "ES5",
+      "ES2015"
     ],
     "allowJs": true,
+    "alwaysStrict": true,
     "skipLibCheck": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -17,6 +23,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
     "jsx": "react"
   },
   "include": [
