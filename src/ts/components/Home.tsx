@@ -1,27 +1,57 @@
 import * as React from "react";
-import {Login} from "./Login";
-// import { connect } from "react-redux";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    // Link
+} from "react-router-dom";
+import {LoginView} from "./LoginView";
+import {AddPetView} from "./AddPetView";
+import { connect } from "react-redux";
+import {ICount} from "../redux/mainReducer";
+import {PetView} from "./PetView";
 
 interface IStateProps {
-    // state: number
+    count: number;
 }
 
 interface IProps extends IStateProps {}
 
 const HomeC = (props: IProps) => {
-    return (
-        <div className="home-container">
-            CatApp
 
-            <Login/>
-        </div>
+    console.log(props.count);
+
+    return (
+        <Router>
+            <div className="home-container">
+                <Switch>
+                    <Route exact path="/">
+                        <LoginView/>
+                    </Route>
+
+                    <Route path="/add-pet" exact>
+                        <AddPetView/>
+                    </Route>
+
+                    <Route path="/pet/:id" exact>
+                        <PetView/>
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
     );
 };
 
-// const mapStateToProps = (state: number) => state;
 
-// export const Home = connect<IStateProps>()(HomeC);
+// export const Home = connect<IStateProps>(mapStateToProps)(HomeC);
 // export const Home = connect()(HomeC)
-export const Home = HomeC;
+// export const Home = HomeC;
 
 // connect must be fixed
+
+
+const mapStateToProps = (state: ICount) => ({
+  count: state.count
+});
+
+export const Home = connect(mapStateToProps, {})(HomeC);
