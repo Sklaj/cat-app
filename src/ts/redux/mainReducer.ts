@@ -1,26 +1,67 @@
-import {combineReducers, createStore} from 'redux'
+import {combineReducers} from 'redux'
 
 
-export interface ICount {
-    count: number
+//------------UserReducer
+
+export interface IUserProfile {
+    id: number | null;
+    name: string | null;
+    email: string | null;
+    pets: number[] | null;
 }
 
-const initialState = {
-    count: 0
+const userInitialState = {
+        id: null,
+        name: null,
+        email: null,
+        pets: []
 };
 
-export const countReducer = function (state = initialState, action: any) {
+const userReducer = function (userProfile: IUserProfile = userInitialState, action: any) {
     switch (action.type) {
-        case "INCREMENT":
-          return state.count + 1;
-        case "DECREMENT":
-          return state.count - 1;
+        case "SET_PROFILE":
+            return {...action.profile};
         default:
-          return state.count;
-      }
+            return userProfile;
+    }
 };
 
 
-export const mainReducer = combineReducers(
-    countReducer
-);
+
+//----------- Pets reducer
+
+export interface IPet {
+    id: number;
+    name: string;
+    age: number;
+    weight: number;
+    sex: "male" | "female"
+    breed: string;
+}
+
+export interface IPetState {
+    pets: IPet[] | [];
+}
+
+const petsInitialState: IPetState = {pets: []};
+
+const petsReducer = function (petsState: IPetState = petsInitialState, action: any) {
+    switch (action.type) {
+        case "SET_PETS":
+            return {pets: [...action.pets]};
+        default:
+            return petsState;
+    }
+};
+
+
+//-------------Combined
+export interface IStore {
+    userProfile: IUserProfile;
+    pets: IPetState
+}
+
+export const mainReducer = combineReducers({
+    userProfile: userReducer,
+    pets: petsReducer
+});

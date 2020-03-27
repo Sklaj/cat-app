@@ -2,24 +2,25 @@ import * as React from "react";
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    // Link
+    Route
 } from "react-router-dom";
 import {LoginView} from "./LoginView";
 import {AddPetView} from "./AddPetView";
-import { connect } from "react-redux";
-import {ICount} from "../redux/mainReducer";
+import {connect} from "react-redux";
+import {IPetState, IStore, IUserProfile} from "../redux/mainReducer";
 import {PetView} from "./PetView";
 
 interface IStateProps {
-    count: number;
+    profile: IUserProfile;
+    pets: IPetState
 }
 
 interface IProps extends IStateProps {}
 
 const HomeC = (props: IProps) => {
 
-    console.log(props.count);
+    console.log(props.profile);
+    console.log(props.pets);
 
     return (
         <Router>
@@ -43,15 +44,11 @@ const HomeC = (props: IProps) => {
 };
 
 
-// export const Home = connect<IStateProps>(mapStateToProps)(HomeC);
-// export const Home = connect()(HomeC)
-// export const Home = HomeC;
-
-// connect must be fixed
-
-
-const mapStateToProps = (state: ICount) => ({
-  count: state.count
-});
+const mapStateToProps = (state: IStore) => {
+  return {
+      profile: state.userProfile,
+      pets: state.pets
+  }
+};
 
 export const Home = connect(mapStateToProps, {})(HomeC);
