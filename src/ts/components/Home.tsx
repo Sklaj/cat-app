@@ -1,4 +1,5 @@
 import * as React from "react";
+import {Login} from "./Login";
 // import { connect } from "react-redux";
 
 interface IStateProps {
@@ -9,11 +10,13 @@ interface IProps extends IStateProps {}
 
 const HomeC = (props: IProps) => {
     return (
-        <div>
-            HomeComponent
+        <div className="home-container">
+            CatApp
+
+            <Login/>
         </div>
     );
-}
+};
 
 // const mapStateToProps = (state: number) => state;
 
