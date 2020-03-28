@@ -43,7 +43,6 @@ export const LoginViewC = (props: IProps) => {
     };
 
     //Render
-    console.log(props.signInForm);
     return (
         <>
             <form className="login-form">

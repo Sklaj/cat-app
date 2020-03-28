@@ -15,7 +15,10 @@ const userInitialState = {
 export const userReducer = function (userProfile: IUserProfile = userInitialState, action: any) {
     switch (action.type) {
         case "SET_PROFILE":
-            return {...action.profile};
+            return {
+                ...userProfile,
+                ...action.profile
+            };
         default:
             return userProfile;
     }

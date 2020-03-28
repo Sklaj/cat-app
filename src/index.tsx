@@ -6,12 +6,15 @@ import "./index.scss";
 import {App} from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { mainReducer } from "./ts/redux/mainReducer";
+import {BrowserRouter as Router} from "react-router-dom";
 
 const store = createStore(mainReducer);
 
 const Application = () => (
     <Provider store={store}>
-        <App/>
+        <Router>
+            <App/>
+        </Router>
     </Provider>
 );
 
