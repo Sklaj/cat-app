@@ -6,7 +6,6 @@ import "./index.scss";
 import {App} from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { mainReducer } from "./ts/redux/mainReducer";
-import {counterReducer} from "./ts/redux/counterReducer";
 
 const store = createStore(mainReducer);
 
