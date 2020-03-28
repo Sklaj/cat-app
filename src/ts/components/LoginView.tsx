@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux";
 import {connect} from "react-redux";
 import {IStore} from "../redux/mainReducer";
 import {ISignInForm} from "../redux/signInFormReducer";
-import {auth} from "../firebase/firebase";
+import {auth, db} from "../firebase/firebase";
 import {useEffect} from "react";
 
 
@@ -54,6 +54,18 @@ export const LoginViewC = (props: IProps) => {
                         isAuthenticated: true
                     }
                 });
+                //adding user to db
+                db.collection("users").doc(user.uid).set({
+                    id: user.uid,
+                    email: user.email,
+                });
+
+                //getting user from db
+                // const userRef = db.collection("users").doc(user.uid);
+                // userRef.get().then(function (data) {
+                //     console.log(data.data());
+                // });
+
                 localStorage.setItem("currentUser", user.uid);
             } else {
                 dispatch({
@@ -67,6 +79,7 @@ export const LoginViewC = (props: IProps) => {
             }
         });
     }, [dispatch]);
+
 
     //Render
     return (
