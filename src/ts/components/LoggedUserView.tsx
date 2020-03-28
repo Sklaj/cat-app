@@ -46,7 +46,7 @@ const LoggedUserViewC = (props: IProps) => {
                     <AddPetView/>
                 </Route>
 
-                <Route path="/pet/:id" exact>
+                <Route exact path="/pet/:id">
                     <PetView/>
                 </Route>
             </Switch>
