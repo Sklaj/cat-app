@@ -7,8 +7,12 @@ import {
 import {LoginView} from "./LoginView";
 import {AddPetView} from "./AddPetView";
 import {connect} from "react-redux";
-import {IPetState, IStore, IUserProfile} from "../redux/mainReducer";
+import {IStore} from "../redux/mainReducer";
 import {PetView} from "./PetView";
+import {IUserProfile} from "../redux/userReducer";
+import {IPetState} from "../redux/petsReducer";
+import {useEffect, useState} from "react";
+import {auth} from "../firebase/firebase";
 
 interface IStateProps {
     profile: IUserProfile;
@@ -22,12 +26,46 @@ const HomeC = (props: IProps) => {
     console.log(props.profile);
     console.log(props.pets);
 
+    const [currentUser, setCurrentUser] = useState<any>(null);
+
+
+
+    useEffect(() => {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                setCurrentUser(user);
+                console.log(user);
+                localStorage.setItem("currentUser", user.uid);
+            } else {
+                setCurrentUser(null);
+                localStorage.removeItem("currentUser");
+            }
+        });
+    }, []);
+
     return (
         <Router>
             <div className="home-container">
+                <div>
+                    CatApp
+                </div>
+
+                {currentUser ? (
+                    <div>
+                        Zalogowany
+
+                        <button onClick={() => auth.signOut()}>
+                            wyloguj
+                        </button>
+                    </div>
+                ) : (
+                    <LoginView/>
+                    )
+                }
+
+
                 <Switch>
                     <Route exact path="/">
-                        <LoginView/>
                     </Route>
 
                     <Route path="/add-pet" exact>
