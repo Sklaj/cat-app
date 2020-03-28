@@ -36,7 +36,9 @@ const LoggedUserViewC = (props: IProps) => {
                     </button>
 
                     <Link to="/add-pet">
-                        Dodaj zwierzaka
+                        <button>
+                            Dodaj zwierzaka
+                        </button>
                     </Link>
                 </Route>
 

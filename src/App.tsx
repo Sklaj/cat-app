@@ -1,35 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './css/App.scss';
-import {useDispatch} from "react-redux";
-import {auth} from "./ts/firebase/firebase";
+import {connect} from "react-redux";
 import {LoggedUserView} from "./ts/components/LoggedUserView";
 import {LoginView} from "./ts/components/LoginView";
+import {IStore} from "./ts/redux/mainReducer";
+import {IUserProfile} from "./ts/redux/userReducer";
 
 
-export const App = () => {
-    //Authenticated user app handling
-    const [currentUser, setCurrentUser] = useState<any>(null);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                setCurrentUser(user);
-                console.log(user);
-                dispatch({
-                    type: "SET_PROFILE", profile: {
-                        id: user.uid,
-                        email: user.email
-                    }
-                });
-                localStorage.setItem("currentUser", user.uid);
-            } else {
-                setCurrentUser(null);
-                localStorage.removeItem("currentUser");
-            }
-        });
-    }, [dispatch]);
+interface IStateProps {
+    profile: IUserProfile;
+}
 
-    //render
+interface IProps extends IStateProps{}
+
+export const AppC = (props: IProps) => {
     return (
         <div className="App">
             <div className="home-container">
@@ -37,7 +21,7 @@ export const App = () => {
                     CatApp
                 </div>
 
-                {currentUser ? (
+                {props.profile.isAuthenticated ? (
                         <LoggedUserView/>
                     ) : (
                         <LoginView/>
@@ -47,3 +31,11 @@ export const App = () => {
         </div>
     );
 };
+
+const mapStateToProps = (state: IStore) => {
+    return {
+        profile: state.userProfile
+    }
+};
+
+export const App = connect(mapStateToProps, {})(AppC);

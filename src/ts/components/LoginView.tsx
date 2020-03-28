@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {IStore} from "../redux/mainReducer";
 import {ISignInForm} from "../redux/signInFormReducer";
 import {auth} from "../firebase/firebase";
+import {useEffect} from "react";
 
 
 interface IStateProps {
@@ -41,6 +42,31 @@ export const LoginViewC = (props: IProps) => {
                 )
             );
     };
+
+    //Handle user authentication
+    useEffect(() => {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                dispatch({
+                    type: "SET_PROFILE", profile: {
+                        id: user.uid,
+                        email: user.email,
+                        isAuthenticated: true
+                    }
+                });
+                localStorage.setItem("currentUser", user.uid);
+            } else {
+                dispatch({
+                    type: "SET_PROFILE", profile: {
+                        id: null,
+                        email: null,
+                        isAuthenticated: false
+                    }
+                });
+                localStorage.removeItem("currentUser");
+            }
+        });
+    }, [dispatch]);
 
     //Render
     return (
