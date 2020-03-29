@@ -60,12 +60,6 @@ export const LoginViewC = (props: IProps) => {
                     email: user.email,
                 });
 
-                //getting user from db
-                // const userRef = db.collection("users").doc(user.uid);
-                // userRef.get().then(function (data) {
-                //     console.log(data.data());
-                // });
-
                 localStorage.setItem("currentUser", user.uid);
             } else {
                 dispatch({

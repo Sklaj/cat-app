@@ -1,11 +1,11 @@
 import * as React from "react";
-import {auth} from "../firebase/firebase";
-import {Link, Route, Switch} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import {AddPetView} from "./AddPetView";
 import {PetView} from "./PetView";
 import {IStore} from "../redux/mainReducer";
 import {connect} from "react-redux";
 import {IUserProfile} from "../redux/userReducer";
+import {UserDashboard} from "./UserDashboard";
 
 
 interface IStateProps {
@@ -19,27 +19,12 @@ const LoggedUserViewC = (props: IProps) => {
         <div className="logged-user">
             <Switch>
                 <Route exact path="/">
-                    <div>
-                        Zalogowany
-                    </div>
-
-                    <div>
-                        email: {props.profile.email}
-                    </div>
-
-                    <div>
-                        id: {props.profile.id}
-                    </div>
-
-                    <button onClick={() => auth.signOut()}>
-                        wyloguj
-                    </button>
-
-                    <Link to="/add-pet">
-                        <button>
-                            Dodaj zwierzaka
-                        </button>
-                    </Link>
+                    {(props.profile.email && props.profile.id) && (
+                        <UserDashboard
+                            email={props.profile.email}
+                            id={props.profile.id}
+                        />
+                    )}
                 </Route>
 
                 <Route exact path="/add-pet">

@@ -1,8 +1,8 @@
 export interface IUserProfile {
-    id: number | null;
+    id: string | null;
     name: string | null;
     email: string | null;
-    pets: number[] | null;
+    pets: string[] | [];
     isAuthenticated: boolean;
 }
 
@@ -20,6 +20,11 @@ export const userReducer = function (userProfile: IUserProfile = userInitialStat
             return {
                 ...userProfile,
                 ...action.profile
+            };
+        case "ADD_PETS":
+            return {
+                ...userProfile,
+              pets: [...userProfile.pets, ...action.pets]
             };
         default:
             return userProfile;
