@@ -1,0 +1,14 @@
+.add-pet {
+  .add-pet-form {
+    display: flex;
+    flex-direction: column;
+
+    input {
+      margin-bottom: 10px;
+    }
+
+    .radio-wrapper {
+      display: flex;
+    }
+  }
+}
