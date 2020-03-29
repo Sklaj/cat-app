@@ -1,12 +1,33 @@
 import * as React from "react";
+import {connect, useDispatch} from "react-redux";
+import {IStore} from "../redux/mainReducer";
+import {IAddPetForm} from "../redux/addPetFormReducer";
+import {db} from "../firebase/firebase";
+import { v4 as uuidv4 } from 'uuid';
 
-interface IProps {}
 
-export const AddPetView = (props: IProps) => {
+interface IStateProps {
+    form: IAddPetForm;
+}
+
+interface IProps extends IStateProps {}
+
+const AddPetViewC = (props: IProps) => {
+
+    //form handling
+    const dispatch = useDispatch();
+    const updateForm = (data: any) => dispatch({type: "UPDATE_FORM", data: data});
 
 
     const onSubmit = (e: any) => {
         e.preventDefault();
+
+        const petId = uuidv4();
+
+        db.collection("pets").doc(petId).set({
+            id: petId,
+            ...props.form
+        });
     };
 
     return (
@@ -17,47 +38,96 @@ export const AddPetView = (props: IProps) => {
                 <div className="radio-wrapper">
                     <label htmlFor="pet-type-dog">Pies</label>
 
-                    <input type="radio" name="pet-type" id="pet-type-dog" value={1}/>
+                    <input
+                        type="radio"
+                        name="pet-type"
+                        id="pet-type-dog"
+                        value={props.form.type}
+                        onChange={() => updateForm({type: 1})}/>
 
                     <br/>
 
                     <label htmlFor="pet-type-cat">Kot</label>
 
-                    <input type="radio" name="pet-type" id="pet-type-cat" value={2}/>
+                    <input
+                        type="radio"
+                        name="pet-type"
+                        id="pet-type-cat"
+                        value={props.form.type}
+                        onChange={() => updateForm({type: 2})}
+                    />
                 </div>
 
                 <div className="radio-wrapper">
                     <label htmlFor="pet-sex-male">Male</label>
 
-                    <input type="radio" name="pet-sex" id="pet-sex-male"
-                           onChange={e => console.log("male", e.target.value)}
+                    <input
+                        type="radio"
+                        name="pet-sex"
+                        id="pet-sex-male"
+                        value={props.form.sex}
+                        onChange={() => updateForm({sex: 1})}
                     />
 
                     <br/>
 
                     <label htmlFor="pet-sex-female">Female</label>
 
-                    <input type="radio" name="pet-sex" id="pet-sex-female"
-                           onChange={e => console.log("female", e.target.value)}
+                    <input
+                        type="radio"
+                        name="pet-sex"
+                        id="pet-sex-female"
+                        value={props.form.sex}
+                        onChange={() => updateForm({sex: 2})}
                     />
                 </div>
 
                 <label htmlFor="pet-name">Name</label>
 
-                <input type="name" id="pet-name" name="name"/>
+                <input
+                    type="text"
+                    id="pet-name"
+                    name="name"
+                    value={props.form.name}
+                    onChange={e => updateForm({name: e.target.value})}
+                />
 
                 <label htmlFor="pet-age">Age</label>
 
-                <input type="age" id="pet-age" name="age"/>
+                <input
+                    type="number"
+                    id="pet-age"
+                    name="age"
+                    value={props.form.age}
+                    onChange={e => updateForm({age: e.target.value})}
+                />
 
                 <label htmlFor="pet-breed">Rasa</label>
 
-                <input type="breed" id="pet-breed" name="breed"/>
+                <input
+                    type="text"
+                    id="pet-breed"
+                    name="breed"
+                    value={props.form.breed}
+                    onChange={e => updateForm({breed: e.target.value})}
+                />
 
-                <button type="submit" name="save-pet" onClick={e => onSubmit(e)}>
+                <button
+                    type="submit"
+                    name="save-pet"
+                    onClick={e => onSubmit(e)}
+                >
                     Zapisz zwierzaka
                 </button>
             </form>
         </div>
     );
 };
+
+const mapStateToProps = (state: IStore) => {
+    return {
+        form: state.addPetForm
+    }
+};
+
+export const AddPetView = connect(mapStateToProps, {})(AddPetViewC);
