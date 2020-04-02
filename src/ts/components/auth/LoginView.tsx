@@ -1,19 +1,16 @@
 import * as React from "react";
-import {useDispatch} from "react-redux";
-import {connect} from "react-redux";
-import {IStore} from "../redux/mainReducer";
-import {ISignInForm} from "../redux/signInFormReducer";
-import {auth, db} from "../firebase/firebase";
+import {useDispatch, useSelector} from "react-redux";
+import {IStore} from "../../redux/mainReducer";
+import {ISignInForm} from "../../redux/signInFormReducer";
+import {auth, db} from "../../firebase/firebase";
 import {useEffect} from "react";
+import {Redirect} from "react-router-dom";
 
 
-interface IStateProps {
-    signInForm: ISignInForm;
-}
-
-interface IProps extends IStateProps {}
-
-export const LoginViewC = (props: IProps) => {
+export const LoginView = () => {
+    //Store data
+    const signInForm: ISignInForm = useSelector((store: IStore) => store.signInForm);
+    const isAuthenticated: boolean = useSelector((store: IStore) => store.userProfile.isAuthenticated);
 
     //form change handling
     const dispatch = useDispatch();
@@ -24,7 +21,7 @@ export const LoginViewC = (props: IProps) => {
     const handleSignIn = (e: any) => {
         e.preventDefault();
         auth
-            .signInWithEmailAndPassword(props.signInForm.email, props.signInForm.password)
+            .signInWithEmailAndPassword(signInForm.email, signInForm.password)
             .catch((error) =>
                 alert(
                     `Your email or password is incorrect, please check your data, ${error}`
@@ -35,7 +32,7 @@ export const LoginViewC = (props: IProps) => {
     const handleSignUp = (e: any) => {
         e.preventDefault();
         auth
-            .createUserWithEmailAndPassword(props.signInForm.email, props.signInForm.password)
+            .createUserWithEmailAndPassword(signInForm.email, signInForm.password)
             .catch((error) =>
                 alert(
                     `Your email or password is incorrect, please check your data, ${error}`
@@ -43,7 +40,7 @@ export const LoginViewC = (props: IProps) => {
             );
     };
 
-    //Handle user authentication
+    //handle user authentication
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -74,7 +71,6 @@ export const LoginViewC = (props: IProps) => {
         });
     }, [dispatch]);
 
-
     //Render
     return (
         <>
@@ -89,7 +85,7 @@ export const LoginViewC = (props: IProps) => {
                     type="email"
                     name="email"
                     required
-                    value={props.signInForm.email}
+                    value={signInForm.email}
                     onChange={e => updateEmail(e.target.value)}
                 />
 
@@ -103,7 +99,7 @@ export const LoginViewC = (props: IProps) => {
                     name="password"
                     id="password-input"
                     required
-                    value={props.signInForm.password}
+                    value={signInForm.password}
                     onChange={e => updatePassword(e.target.value)}
                 />
 
@@ -114,15 +110,12 @@ export const LoginViewC = (props: IProps) => {
                 <button type="submit" name="Zarejestruj się" value={1} onClick={e => handleSignUp(e)}>
                     Zarejestruj się
                 </button>
+
+                {isAuthenticated && (
+                    <Redirect to="/"/>
+                )}
             </form>
         </>
     );
 };
 
-const mapStateToProps = (state: IStore) => {
-    return {
-        signInForm: state.signInForm
-    }
-};
-
-export const LoginView = connect(mapStateToProps, {})(LoginViewC);

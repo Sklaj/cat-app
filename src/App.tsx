@@ -1,19 +1,19 @@
 import React from 'react';
 import './css/App.scss';
-import {connect} from "react-redux";
-import {LoggedUserView} from "./ts/components/LoggedUserView";
-import {LoginView} from "./ts/components/LoginView";
+import {useSelector} from "react-redux";
+import {LoginView} from "./ts/components/auth/LoginView";
 import {IStore} from "./ts/redux/mainReducer";
 import {IUserProfile} from "./ts/redux/userReducer";
+import {Redirect, Route, Switch} from "react-router-dom";
+import {UserDashboard} from "./ts/components/UserDashboard";
+import {AddPetView} from "./ts/components/AddPetView";
+import {PetView} from "./ts/components/PetView";
 
 
-interface IStateProps {
-    profile: IUserProfile;
-}
+export const App = () => {
+    //Store data
+    const profile: IUserProfile = useSelector((store: IStore) => store.userProfile);
 
-interface IProps extends IStateProps{}
-
-export const AppC = (props: IProps) => {
     return (
         <div className="App">
             <div className="home-container">
@@ -21,21 +21,35 @@ export const AppC = (props: IProps) => {
                     CatApp
                 </div>
 
-                {props.profile.isAuthenticated ? (
-                        <LoggedUserView/>
-                    ) : (
+                <Switch>
+                    <Route path="/login">
                         <LoginView/>
-                    )
-                }
+                    </Route>
+
+                    {profile.isAuthenticated? (
+                        <>
+                            <Route exact path="/">
+                                {(profile.email && profile.id) && (
+                                    <UserDashboard
+                                        email={profile.email}
+                                        id={profile.id}
+                                    />
+                                )}
+                            </Route>
+
+                            <Route exact path="/add-pet">
+                                <AddPetView/>
+                            </Route>
+
+                            <Route exact path="/pet/:id">
+                                <PetView/>
+                            </Route>
+                        </>
+                    ) : (
+                        <Redirect to="/login"/>
+                    )}
+                </Switch>
             </div>
         </div>
     );
 };
-
-const mapStateToProps = (state: IStore) => {
-    return {
-        profile: state.userProfile
-    }
-};
-
-export const App = connect(mapStateToProps, {})(AppC);

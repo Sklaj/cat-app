@@ -32,10 +32,6 @@ export const UserDashboard = (props: IProps) => {
                     Dodaj zwierzaka
                 </button>
             </Link>
-
-            <div>
-
-            </div>
         </>
     );
 };
