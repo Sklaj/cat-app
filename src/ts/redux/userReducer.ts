@@ -26,6 +26,10 @@ export const userReducer = function (userProfile: IUserProfile = userInitialStat
                 ...userProfile,
               pets: [...userProfile.pets, ...action.pets]
             };
+        case "RESET_PROFILE":
+            return {
+                ...userInitialState
+            };
         default:
             return userProfile;
     }

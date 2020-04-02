@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {IStore} from "../../redux/mainReducer";
 import {ISignInForm} from "../../redux/signInFormReducer";
 import {auth, db} from "../../firebase/firebase";
-import {useEffect} from "react";
 import {Redirect} from "react-router-dom";
 
 
@@ -18,9 +17,9 @@ export const LoginView = () => {
     const updatePassword = (password: string) => dispatch({type: "UPDATE_PASSWORD", password: password});
 
     //form submit handling
-    const handleSignIn = (e: any) => {
+    const handleSignIn = async (e: any) => {
         e.preventDefault();
-        auth
+        await auth
             .signInWithEmailAndPassword(signInForm.email, signInForm.password)
             .catch((error) =>
                 alert(
@@ -29,47 +28,34 @@ export const LoginView = () => {
             );
     };
 
-    const handleSignUp = (e: any) => {
+    const handleSignUp = async (e: any) => {
         e.preventDefault();
-        auth
+        await auth
             .createUserWithEmailAndPassword(signInForm.email, signInForm.password)
             .catch((error) =>
                 alert(
                     `Your email or password is incorrect, please check your data, ${error}`
                 )
             );
-    };
-
-    //handle user authentication
-    useEffect(() => {
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                dispatch({
-                    type: "SET_PROFILE", profile: {
+        await auth
+            .onAuthStateChanged((user) => {
+                if (user) {
+                    dispatch({
+                        type: "SET_PROFILE", profile: {
+                            id: user.uid,
+                            email: user.email,
+                            isAuthenticated: true
+                        }
+                    });
+                    //adding user to db
+                    db.collection("users").doc(user.uid).set({
                         id: user.uid,
                         email: user.email,
-                        isAuthenticated: true
-                    }
-                });
-                //adding user to db
-                db.collection("users").doc(user.uid).set({
-                    id: user.uid,
-                    email: user.email,
-                });
-
-                localStorage.setItem("currentUser", user.uid);
-            } else {
-                dispatch({
-                    type: "SET_PROFILE", profile: {
-                        id: null,
-                        email: null,
-                        isAuthenticated: false
-                    }
-                });
-                localStorage.removeItem("currentUser");
-            }
-        });
-    }, [dispatch]);
+                    });
+                    localStorage.setItem("currentUser", user.uid);
+                }
+            })
+    };
 
     //Render
     return (

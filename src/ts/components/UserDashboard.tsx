@@ -1,14 +1,22 @@
 import * as React from "react";
 import {auth} from "../firebase/firebase";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
 
 interface IProps {
     email: string;
     id: string;
-
 }
 
 export const UserDashboard = (props: IProps) => {
+
+    const dispatch = useDispatch();
+    const onLogOut = async () => {
+        await auth.signOut();
+        await dispatch({type: "RESET_PROFILE"});
+        await localStorage.removeItem("currentUser");
+    };
+
     return (
         <>
             <div>
@@ -23,7 +31,7 @@ export const UserDashboard = (props: IProps) => {
                 id: {props.id}
             </div>
 
-            <button onClick={() => auth.signOut()}>
+            <button onClick={() => onLogOut()}>
                 wyloguj
             </button>
 
