@@ -26,6 +26,19 @@ export const LoginView = () => {
                     `Your email or password is incorrect, please check your data, ${error}`
                 )
             );
+        await auth
+            .onAuthStateChanged((user) => {
+                if (user) {
+                    db.collection("users").doc(user.uid).get().then(user => {
+                        dispatch({
+                            type: "SET_PROFILE", profile: {
+                                ...user.data(),
+                                isAuthenticated: true
+                            }
+                        });
+                    })
+                }
+            })
     };
 
     const handleSignUp = async (e: any) => {

@@ -29,7 +29,7 @@ export const App = () => {
                 })
             }
         });
-    }, []);
+    }, [dispatch]);
 
     //Render
     return (
@@ -49,8 +49,7 @@ export const App = () => {
                             <Route exact path="/">
                                 {(profile.email && profile.id) && (
                                     <UserDashboard
-                                        email={profile.email}
-                                        id={profile.id}
+                                        profile={profile}
                                     />
                                 )}
                             </Route>

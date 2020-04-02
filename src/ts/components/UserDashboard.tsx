@@ -2,10 +2,11 @@ import * as React from "react";
 import {auth} from "../firebase/firebase";
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
+import {IUserProfile} from "../redux/userReducer";
+import {map} from  "lodash";
 
 interface IProps {
-    email: string;
-    id: string;
+    profile: IUserProfile;
 }
 
 export const UserDashboard = (props: IProps) => {
@@ -17,6 +18,8 @@ export const UserDashboard = (props: IProps) => {
         await localStorage.removeItem("currentUser");
     };
 
+
+
     return (
         <>
             <div>
@@ -24,11 +27,11 @@ export const UserDashboard = (props: IProps) => {
             </div>
 
             <div>
-                email: {props.email}
+                email: {props.profile.email}
             </div>
 
             <div>
-                id: {props.id}
+                id: {props.profile.id}
             </div>
 
             <button onClick={() => onLogOut()}>
@@ -40,6 +43,16 @@ export const UserDashboard = (props: IProps) => {
                     Dodaj zwierzaka
                 </button>
             </Link>
+
+            <div>
+                {map(props.profile.pets, (pet) => {
+                    return (
+                        <div key={pet}>
+                            {pet}
+                        </div>
+                    );
+                })}
+            </div>
         </>
     );
 };

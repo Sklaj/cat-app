@@ -24,7 +24,7 @@ export const userReducer = function (userProfile: IUserProfile = userInitialStat
         case "ADD_PETS":
             return {
                 ...userProfile,
-              pets: [...userProfile.pets, ...action.pets]
+              pets: [...userProfile.pets, action.pet]
             };
         case "RESET_PROFILE":
             return {

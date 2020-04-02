@@ -29,12 +29,14 @@ const AddPetViewC = (props: IProps) => {
         await db.collection("pets").doc(petId).set({
             id: petId,
             ...props.form
-        }, {merge: true});
+        });
 
         if (props.profile.id) {
             await db.collection("users").doc(props.profile.id).update({
                 pets: firebase.firestore.FieldValue.arrayUnion(petId)
-            })
+            });
+
+            await dispatch({type: "ADD_PETS", pet: petId});
         }
         setSubmitDone(true);
     };
