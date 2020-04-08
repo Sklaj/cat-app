@@ -27,11 +27,8 @@ export const App = () => {
                 });
             }
         };
-
         const unsubscibe = auth.onAuthStateChanged(setUser);
-
         return () => unsubscibe();
-
     }, [dispatch]);
 
     //Render

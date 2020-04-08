@@ -46,9 +46,11 @@ export const UserDashboard = (props: IProps) => {
             <div>
                 {map(props.profile.pets, (pet) => {
                     return (
-                        <div key={pet}>
-                            {pet}
-                        </div>
+                        <Link to={`/pet/${pet}`} key={pet}>
+                            <div>
+                                {pet}
+                            </div>
+                        </Link>
                     );
                 })}
             </div>
