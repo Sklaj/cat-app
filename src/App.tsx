@@ -8,7 +8,7 @@ import {Redirect, Route, Switch} from "react-router-dom";
 import {UserDashboard} from "./ts/components/UserDashboard";
 import {AddPetView} from "./ts/components/AddPetView";
 import {PetView} from "./ts/components/PetView";
-import {auth, db} from "./ts/firebase/firebase";
+import {auth} from "./ts/firebase/firebase";
 
 
 export const App = () => {
@@ -17,18 +17,21 @@ export const App = () => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        auth.onAuthStateChanged(user => {
+        const setUser = (user: any) => {
             if (user) {
-                db.collection("users").doc(user.uid).get().then(user => {
-                    dispatch({
-                        type: "SET_PROFILE", profile: {
-                            ...user.data(),
-                            isAuthenticated: true
-                        }
-                    });
-                })
+                dispatch({
+                    type: "SET_PROFILE", profile: {
+                        ...user.data(),
+                        isAuthenticated: true
+                    }
+                });
             }
-        });
+        };
+
+        const unsubscibe = auth.onAuthStateChanged(setUser);
+
+        return () => unsubscibe();
+
     }, [dispatch]);
 
     //Render

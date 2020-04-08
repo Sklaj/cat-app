@@ -3,7 +3,8 @@ import {auth} from "../firebase/firebase";
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {IUserProfile} from "../redux/userReducer";
-import {map} from  "lodash";
+import { map } from "lodash";
+
 
 interface IProps {
     profile: IUserProfile;
@@ -17,8 +18,6 @@ export const UserDashboard = (props: IProps) => {
         await dispatch({type: "RESET_PROFILE"});
         await localStorage.removeItem("currentUser");
     };
-
-
 
     return (
         <>
