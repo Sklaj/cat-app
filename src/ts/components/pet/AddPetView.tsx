@@ -7,7 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 import {IUserProfile} from "../auth/reducers/userReducer";
 import {useState} from "react";
 import {Redirect} from "react-router";
-import firebase from "src/firebase";
+import firebase from "firebase";
+
 
 
 interface IStateProps {
