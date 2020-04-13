@@ -1,8 +1,8 @@
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {IStore} from "../../redux/reducers/mainReducer";
-import {ISignInForm} from "../../redux/reducers/signInFormReducer";
-import {auth, db} from "../../firebase/firebase";
+import {IStore} from "../../../mainReducer";
+import {ISignInForm} from "./reducers/signInFormReducer";
+import {auth, db} from "../../../firebase";
 import {Redirect} from "react-router-dom";
 
 

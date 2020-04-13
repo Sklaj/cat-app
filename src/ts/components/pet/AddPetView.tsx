@@ -1,13 +1,13 @@
 import * as React from "react";
 import {connect, useDispatch} from "react-redux";
-import {IStore} from "../redux/reducers/mainReducer";
-import {IAddPetForm} from "../redux/reducers/addPetFormReducer";
-import {db} from "../firebase/firebase";
+import {IStore} from "../../../mainReducer";
+import {IAddPetForm} from "./reducers/addPetFormReducer";
+import {db} from "../../../firebase";
 import { v4 as uuidv4 } from 'uuid';
-import {IUserProfile} from "../redux/reducers/userReducer";
+import {IUserProfile} from "../auth/reducers/userReducer";
 import {useState} from "react";
 import {Redirect} from "react-router";
-import firebase from "firebase";
+import firebase from "src/firebase";
 
 
 interface IStateProps {
