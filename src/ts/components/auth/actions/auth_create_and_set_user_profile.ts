@@ -3,21 +3,20 @@ import {Dispatch} from "redux";
 
 export const authCreateAndSetUserProfile = (dispatch: Dispatch) => {
     auth.onAuthStateChanged((user) => {
-            if (user) {
-                dispatch({
-                    type: "SET_PROFILE", profile: {
-                        id: user.uid,
-                        email: user.email,
-                        isAuthenticated: true
-                    }
-                });
-                //adding user to db
-                db.collection("users").doc(user.uid).set({
+        if (user) {
+            dispatch({
+                type: "SET_PROFILE", profile: {
                     id: user.uid,
                     email: user.email,
-                });
-                localStorage.setItem("currentUser", user.uid);
-            }
-        })
-
+                    isAuthenticated: true
+                }
+            });
+            //adding user to db
+            db.collection("users").doc(user.uid).set({
+                id: user.uid,
+                email: user.email,
+            });
+            localStorage.setItem("currentUser", user.uid);
+        }
+    })
 };
