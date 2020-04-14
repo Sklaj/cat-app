@@ -2,7 +2,7 @@ import {auth, db} from "../../../../firebase";
 import {Dispatch} from "redux";
 
 export const authCreateAndSetUserProfile = (dispatch: Dispatch) => {
-    auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
         if (user) {
             dispatch({
                 type: "SET_PROFILE", profile: {
@@ -18,5 +18,7 @@ export const authCreateAndSetUserProfile = (dispatch: Dispatch) => {
             });
             localStorage.setItem("currentUser", user.uid);
         }
-    })
+    });
+
+    unsubscribe();
 };

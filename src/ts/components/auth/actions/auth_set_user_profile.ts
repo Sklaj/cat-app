@@ -2,7 +2,7 @@ import {auth, db} from "../../../../firebase";
 import {Dispatch} from "redux";
 
 export const setUserProfile = (dispatch: Dispatch) => {
-    auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
         if (user) {
             db.collection("users").doc(user.uid).get().then(user => {
                 dispatch({
@@ -13,5 +13,7 @@ export const setUserProfile = (dispatch: Dispatch) => {
                 });
             })
         }
-    })
+    });
+
+    unsubscribe();
 };

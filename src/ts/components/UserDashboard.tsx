@@ -1,9 +1,12 @@
 import * as React from "react";
 import {auth} from "../../firebase";
 import {Link} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {IUserProfile} from "./auth/reducers/userReducer";
 import { map } from "lodash";
+import {IStore} from "../../mainReducer";
+import {useEffect} from "react";
+import {getPetsData} from "../redux/actions/getPetData";
 
 
 interface IProps {
@@ -18,6 +21,12 @@ export const UserDashboard = (props: IProps) => {
         await dispatch({type: "RESET_PROFILE"});
         await localStorage.removeItem("currentUser");
     };
+
+    useEffect(() => {
+        getPetsData(props.profile.pets, dispatch);
+    }, [props.profile.pets, dispatch]);
+
+    const pets = useSelector((store: IStore) => store.pets.pets);
 
     return (
         <>
@@ -44,13 +53,16 @@ export const UserDashboard = (props: IProps) => {
             </Link>
 
             <div>
-                {map(props.profile.pets, (pet) => {
+                {pets && map(pets, (pet) => {
                     return (
-                        <Link to={`/pet/${pet}`} key={pet}>
-                            <div>
-                                {pet}
-                            </div>
-                        </Link>
+                        <li key={pet.id}>
+                            <Link to={`/pet/${pet.id}`}>
+                                <p style={{marginRight: "5px", display: "inline-block"}}>{pet.name}</p>
+                                <p style={{marginRight: "5px", display: "inline-block"}}>{pet.age}</p>
+                                <p style={{marginRight: "5px", display: "inline-block"}}>{pet.breed}</p>
+                                <p style={{marginRight: "5px", display: "inline-block"}}>{pet.sex}</p>
+                            </Link>
+                        </li>
                     );
                 })}
             </div>
