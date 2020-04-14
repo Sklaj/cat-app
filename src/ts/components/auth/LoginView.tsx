@@ -1,9 +1,12 @@
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {IStore} from "../../redux/reducers/mainReducer";
-import {ISignInForm} from "../../redux/reducers/signInFormReducer";
-import {auth, db} from "../../firebase/firebase";
+import {IStore} from "../../../mainReducer";
+import {ISignInForm} from "./reducers/signInFormReducer";
 import {Redirect} from "react-router-dom";
+import {authSignIn} from "./actions/auth_sign_in_email";
+import {setUserProfile} from "./actions/auth_set_user_profile";
+import {authCreateUser} from "./actions/auth_create_user";
+import {authCreateAndSetUserProfile} from "./actions/auth_create_and_set_user_profile";
 
 
 export const LoginView = () => {
@@ -19,55 +22,14 @@ export const LoginView = () => {
     //form submit handling
     const handleSignIn = async (e: any) => {
         e.preventDefault();
-        await auth
-            .signInWithEmailAndPassword(signInForm.email, signInForm.password)
-            .catch((error) =>
-                alert(
-                    `Your email or password is incorrect, please check your data, ${error}`
-                )
-            );
-        await auth
-            .onAuthStateChanged((user) => {
-                if (user) {
-                    db.collection("users").doc(user.uid).get().then(user => {
-                        dispatch({
-                            type: "SET_PROFILE", profile: {
-                                ...user.data(),
-                                isAuthenticated: true
-                            }
-                        });
-                    })
-                }
-            })
+        await authSignIn(signInForm.email, signInForm.password);
+        setUserProfile(dispatch);
     };
 
     const handleSignUp = async (e: any) => {
         e.preventDefault();
-        await auth
-            .createUserWithEmailAndPassword(signInForm.email, signInForm.password)
-            .catch((error) =>
-                alert(
-                    `Your email or password is incorrect, please check your data, ${error}`
-                )
-            );
-        await auth
-            .onAuthStateChanged((user) => {
-                if (user) {
-                    dispatch({
-                        type: "SET_PROFILE", profile: {
-                            id: user.uid,
-                            email: user.email,
-                            isAuthenticated: true
-                        }
-                    });
-                    //adding user to db
-                    db.collection("users").doc(user.uid).set({
-                        id: user.uid,
-                        email: user.email,
-                    });
-                    localStorage.setItem("currentUser", user.uid);
-                }
-            })
+        await authCreateUser(signInForm.email, signInForm.password);
+        authCreateAndSetUserProfile(dispatch);
     };
 
     //Render

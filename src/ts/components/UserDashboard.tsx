@@ -1,8 +1,8 @@
 import * as React from "react";
-import {auth} from "../firebase/firebase";
+import {auth} from "../../firebase";
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {IUserProfile} from "../redux/reducers/userReducer";
+import {IUserProfile} from "./auth/reducers/userReducer";
 import { map } from "lodash";
 
 

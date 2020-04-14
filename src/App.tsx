@@ -2,13 +2,13 @@ import React, {useEffect} from 'react';
 import './css/App.scss';
 import {useDispatch, useSelector} from "react-redux";
 import {LoginView} from "./ts/components/auth/LoginView";
-import {IStore} from "./ts/redux/reducers/mainReducer";
-import {IUserProfile} from "./ts/redux/reducers/userReducer";
+import {IStore} from "./mainReducer";
+import {IUserProfile} from "./ts/components/auth/reducers/userReducer";
 import {Redirect, Route, Switch} from "react-router-dom";
 import {UserDashboard} from "./ts/components/UserDashboard";
-import {AddPetView} from "./ts/components/AddPetView";
-import {PetView} from "./ts/components/PetView";
-import {auth} from "./ts/firebase/firebase";
+import {AddPetView} from "./ts/components/pet/AddPetView";
+import {PetView} from "./ts/components/pet/PetView";
+import {auth} from "./firebase";
 
 
 export const App = () => {
