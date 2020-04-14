@@ -27,8 +27,8 @@ export const App = () => {
                 });
             }
         };
-        const unsubscibe = auth.onAuthStateChanged(setUser);
-        return () => unsubscibe();
+        const unsubscribe = auth.onAuthStateChanged(setUser);
+        return () => unsubscribe();
     }, [dispatch]);
 
     //Render

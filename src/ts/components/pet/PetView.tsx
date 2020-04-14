@@ -1,25 +1,33 @@
 import * as React from "react";
-import {useParams} from "react-router";
-import {getPetData} from "../redux/actions/getPetData";
-import {IUserProfile} from "../redux/reducers/userReducer";
-import {useSelector} from "react-redux";
-import {IStore} from "../redux/reducers/mainReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {IUserProfile} from "../auth/reducers/userReducer";
+import {IStore} from "../../../mainReducer";
+import {getPetsData} from "../../redux/actions/getPetData";
+import {useEffect} from "react";
+import { map } from "lodash";
 
-interface IProps {}
-
-export const PetView = (props: IProps) => {
-    const {id} = useParams();
+export const PetView = React.memo(() => {
+    const dispatch = useDispatch();
     const profile: IUserProfile = useSelector((store: IStore) => store.userProfile);
 
+    useEffect(() => {
+        getPetsData(profile.pets, dispatch);
+    }, [profile.pets, dispatch]);
 
-    if (id) {
-        // getPetsData(profile.pets);
-        console.log(getPetData(id));
-    }
+    const pets = useSelector((store: IStore) => store.pets.pets);
 
     return (
-        <h3>
-            {id}
-        </h3>
+        <ul>
+            {pets && map(pets, (pet) => {
+                return (
+                  <li key={pet.id}>
+                      <p style={{marginRight: "5px", display: "inline-block"}}>{pet.name}</p>
+                      <p style={{marginRight: "5px", display: "inline-block"}}>{pet.age}</p>
+                      <p style={{marginRight: "5px", display: "inline-block"}}>{pet.breed}</p>
+                      <p style={{marginRight: "5px", display: "inline-block"}}>{pet.sex}</p>
+                  </li>
+                );
+            })}
+        </ul>
     )
-};
+});
