@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux'
-import {IPetState, petsReducer} from "./ts/pet/reducers/petsReducer";
+import {IPetState, petsReducer} from "./ts/pets/reducers/petsReducer";
 import {IUserProfile, userReducer} from "./ts/auth/reducers/userReducer";
 import {ISignInForm, signInFormReducer} from "./ts/auth/reducers/signInFormReducer";
-import {addPetFormReducer, IAddPetForm} from "./ts/pet/reducers/addPetFormReducer";
+import {addPetFormReducer, IAddPetForm} from "./ts/pets/reducers/addPetFormReducer";
 
 //Main Reducer
 export interface IStore {

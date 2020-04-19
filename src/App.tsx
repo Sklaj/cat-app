@@ -6,9 +6,12 @@ import {IStore} from "./mainReducer";
 import {IUserProfile} from "./ts/auth/reducers/userReducer";
 import {Redirect, Route, Switch} from "react-router-dom";
 import {UserDashboard} from "./ts/user_dashboard/UserDashboard";
-import {AddPetView} from "./ts/pet/AddPetView";
-import {PetView} from "./ts/pet/PetView";
+import {AddPetView} from "./ts/pets/AddPetView";
+import {PetView} from "./ts/pets/PetView";
 import {auth, db} from "./firebase";
+import {PetListView} from "./ts/pets/PetListView";
+import {FamilyView} from "./ts/family/FamilyView";
+import {RemindsView} from "./ts/reminds/RemindsView";
 
 
 export const App = () => {
@@ -41,10 +44,6 @@ export const App = () => {
     return (
         <div className="App">
             <div className="home-container">
-                <div>
-                    CatApp
-                </div>
-
                 <Switch>
                     <Route path="/login">
                         <LoginView/>
@@ -54,18 +53,30 @@ export const App = () => {
                         <>
                             <Route exact path="/">
                                 {(profile.email && profile.id) && (
-                                    <UserDashboard
-                                        profile={profile}
-                                    />
+                                    <UserDashboard profile={profile}/>
                                 )}
                             </Route>
 
-                            <Route exact path="/add-pet">
+                            <Route exact path="/reminds">
+                                <RemindsView/>
+                            </Route>
+
+                            {profile.pets.length > 0 && (
+                                <Route exact path="/pets">
+                                    <PetListView profilePets={profile.pets}/>
+                                </Route>
+                            )}
+
+                            <Route exact path="/pets/add-pet">
                                 <AddPetView/>
                             </Route>
 
-                            <Route exact path="/pet/:id">
+                            <Route exact path="/pets/pet/:id">
                                 <PetView/>
+                            </Route>
+
+                            <Route exact path="/family">
+                                <FamilyView/>
                             </Route>
                         </>
                     ) : (
