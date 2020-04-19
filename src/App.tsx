@@ -52,20 +52,16 @@ export const App = () => {
                     {profile.isAuthenticated? (
                         <>
                             <Route exact path="/">
-                                {(profile.email && profile.id) && (
-                                    <UserDashboard profile={profile}/>
-                                )}
+                                <UserDashboard profile={profile}/>
                             </Route>
 
                             <Route exact path="/reminds">
                                 <RemindsView/>
                             </Route>
 
-                            {profile.pets.length > 0 && (
-                                <Route exact path="/pets">
-                                    <PetListView profilePets={profile.pets}/>
-                                </Route>
-                            )}
+                            <Route exact path="/pets">
+                                <PetListView profilePets={profile.pets}/>
+                            </Route>
 
                             <Route exact path="/pets/add-pet">
                                 <AddPetView/>

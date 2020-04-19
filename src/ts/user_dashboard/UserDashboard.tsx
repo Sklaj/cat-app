@@ -18,6 +18,15 @@ export const UserDashboard = (props: IProps) => {
         await dispatch({type: "RESET_PROFILE"});
     };
 
+    if (!props.profile.email) {
+        return (
+            <h3>
+                Brak użytkownika
+            </h3>
+        )
+    }
+
+
     return (
         <>
             <h3>
