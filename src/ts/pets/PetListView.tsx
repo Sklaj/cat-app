@@ -18,28 +18,28 @@ export const PetListView = (props: IProps) => {
         getPetsData(props.profilePets, dispatch);
     }, [props.profilePets, dispatch]);
 
-    const pets = useSelector((store: IStore) => store.pets.pets);
+    const pets = useSelector((store: IStore) => store.pets);
 
     return (
         <>
             <h3>
-               Twoje zwierzaki
+                Twoje zwierzaki
             </h3>
 
-        <div>
-            {pets && map(pets, (pet) => {
-                return (
-                    <li key={pet.id}>
-                        <Link to={`/pets/pet/${pet.id}`}>
-                            <p style={{marginRight: "5px", display: "inline-block"}}>{pet.name}</p>
-                            <p style={{marginRight: "5px", display: "inline-block"}}>{pet.age}</p>
-                            <p style={{marginRight: "5px", display: "inline-block"}}>{pet.breed}</p>
-                            <p style={{marginRight: "5px", display: "inline-block"}}>{pet.sex}</p>
-                        </Link>
-                    </li>
-                );
-            })}
-        </div>
+            <div>
+                {pets && map(pets, (pet) => {
+                    return (
+                        <li key={pet.id}>
+                            <Link to={`/pets/${pet.id}`}>
+                                <p style={{marginRight: "5px", display: "inline-block"}}>{pet.name}</p>
+                                <p style={{marginRight: "5px", display: "inline-block"}}>{pet.age}</p>
+                                <p style={{marginRight: "5px", display: "inline-block"}}>{pet.breed}</p>
+                                <p style={{marginRight: "5px", display: "inline-block"}}>{pet.sex}</p>
+                            </Link>
+                        </li>
+                    );
+                })}
+            </div>
         </>
     );
 };

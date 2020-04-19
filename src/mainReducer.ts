@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import {IPetState, petsReducer} from "./ts/pets/reducers/petsReducer";
+import {IPet, petsReducer} from "./ts/pets/reducers/petsReducer";
 import {IUserProfile, userReducer} from "./ts/auth/reducers/userReducer";
 import {ISignInForm, signInFormReducer} from "./ts/auth/reducers/signInFormReducer";
 import {addPetFormReducer, IAddPetForm} from "./ts/pets/reducers/addPetFormReducer";
@@ -9,7 +9,7 @@ export interface IStore {
     signInForm: ISignInForm;
     addPetForm: IAddPetForm;
     userProfile: IUserProfile;
-    pets: IPetState
+    pets: IPet[]
 }
 
 export const mainReducer = combineReducers({

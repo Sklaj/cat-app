@@ -14,7 +14,7 @@ const userInitialState = {
     isAuthenticated: false
 };
 
-export const userReducer = function (userProfile: IUserProfile = userInitialState, action: any) {
+export const userReducer = function (userProfile = userInitialState, action: any) {
     switch (action.type) {
         case "SET_PROFILE":
             return {

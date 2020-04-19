@@ -1,22 +1,18 @@
 export interface IPet {
-    id: number;
+    id: string;
+    type: number;
+    sex: number;
     name: string;
     age: number;
-    weight: number;
-    sex: "male" | "female"
     breed: string;
 }
 
-export interface IPetState {
-    pets: IPet[] | [];
-}
+const petsInitialState: IPet[] = [];
 
-const petsInitialState: IPetState = {pets: []};
-
-export const petsReducer = function (petsState: IPetState = petsInitialState, action: any) {
+export const petsReducer = function (petsState  = petsInitialState, action: any) {
     switch (action.type) {
         case "SET_PETS":
-            return {pets: [...action.pets]};
+            return [...petsState, ...action.pets];
         default:
             return petsState;
     }

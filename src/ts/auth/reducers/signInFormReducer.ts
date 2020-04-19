@@ -8,7 +8,7 @@ const signInFormInitialState = {
     password: ""
 };
 
-export const signInFormReducer = function (signInForm: ISignInForm = signInFormInitialState, action: any) {
+export const signInFormReducer = function (signInForm = signInFormInitialState, action: any) {
     switch (action.type) {
         case "UPDATE_EMAIL":
             return {

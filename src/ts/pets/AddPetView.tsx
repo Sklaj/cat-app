@@ -56,6 +56,7 @@ const AddPetViewC = (props: IProps) => {
                         type="radio"
                         name="pet-type"
                         id="pet-type-dog"
+                        required
                         value={props.form.type}
                         onChange={() => updateForm({type: 1})}/>
 
@@ -67,6 +68,7 @@ const AddPetViewC = (props: IProps) => {
                         type="radio"
                         name="pet-type"
                         id="pet-type-cat"
+                        required
                         value={props.form.type}
                         onChange={() => updateForm({type: 2})}
                     />
@@ -79,6 +81,7 @@ const AddPetViewC = (props: IProps) => {
                         type="radio"
                         name="pet-sex"
                         id="pet-sex-male"
+                        required
                         value={props.form.sex}
                         onChange={() => updateForm({sex: 1})}
                     />
@@ -91,6 +94,7 @@ const AddPetViewC = (props: IProps) => {
                         type="radio"
                         name="pet-sex"
                         id="pet-sex-female"
+                        required
                         value={props.form.sex}
                         onChange={() => updateForm({sex: 2})}
                     />
@@ -102,6 +106,7 @@ const AddPetViewC = (props: IProps) => {
                     type="text"
                     id="pet-name"
                     name="name"
+                    required
                     value={props.form.name}
                     onChange={e => updateForm({name: e.target.value})}
                 />
@@ -112,6 +117,7 @@ const AddPetViewC = (props: IProps) => {
                     type="number"
                     id="pet-age"
                     name="age"
+                    required
                     value={props.form.age}
                     onChange={e => updateForm({age: e.target.value})}
                 />
@@ -122,6 +128,7 @@ const AddPetViewC = (props: IProps) => {
                     type="text"
                     id="pet-breed"
                     name="breed"
+                    required
                     value={props.form.breed}
                     onChange={e => updateForm({breed: e.target.value})}
                 />

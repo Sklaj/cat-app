@@ -71,7 +71,7 @@ export const App = () => {
                                 <AddPetView/>
                             </Route>
 
-                            <Route exact path="/pets/pet/:id">
+                            <Route exact path="/pets/:petId">
                                 <PetView/>
                             </Route>
 

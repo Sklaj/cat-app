@@ -14,7 +14,7 @@ const addPetFormInitialState = {
     breed: "",
 };
 
-export const addPetFormReducer = function (addPetForm: IAddPetForm = addPetFormInitialState, action: any) {
+export const addPetFormReducer = function (addPetForm = addPetFormInitialState, action: any) {
     switch (action.type) {
         case "UPDATE_FORM":
             return {
