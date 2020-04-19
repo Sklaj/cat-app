@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useEffect} from "react";
-import {getPetsData} from "./actions/getPetData";
+import {getPetsData} from "./actions/getPetsData";
 import {useDispatch, useSelector} from "react-redux";
 import {IStore} from "../../mainReducer";
 import {map} from "lodash";
@@ -13,12 +13,14 @@ interface IProps {
 export const PetListView = (props: IProps) => {
 
     const dispatch = useDispatch();
+    const pets = useSelector((store: IStore) => store.pets);
 
     useEffect(() => {
-        getPetsData(props.profilePets, dispatch);
+        if (pets.length !== props.profilePets.length) {
+            getPetsData(props.profilePets, dispatch);
+        }
     }, [props.profilePets, dispatch]);
 
-    const pets = useSelector((store: IStore) => store.pets);
 
     return (
         <>

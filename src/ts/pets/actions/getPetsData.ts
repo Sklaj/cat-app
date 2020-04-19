@@ -11,6 +11,7 @@ export const getPetsData = (pets: string[], dispatch: Dispatch) => {
     Promise.all(petRefs)
         .then(docs => {
             const petsData = map(docs, (doc) => doc.data());
+            dispatch({type: "RESET_PETS"});
             dispatch({type: "SET_PETS", pets: petsData});
         });
 };
