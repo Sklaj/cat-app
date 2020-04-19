@@ -16,7 +16,6 @@ export const authCreateAndSetUserProfile = (dispatch: Dispatch) => {
                 id: user.uid,
                 email: user.email,
             });
-            localStorage.setItem("currentUser", user.uid);
         }
     });
 

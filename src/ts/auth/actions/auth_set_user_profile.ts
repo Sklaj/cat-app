@@ -12,7 +12,6 @@ export const setUserProfile = (dispatch: Dispatch) => {
                     }
                 });
             });
-            localStorage.setItem("currentUser", user.uid);
         }
     });
 

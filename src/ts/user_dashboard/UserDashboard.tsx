@@ -6,7 +6,7 @@ import {IUserProfile} from "../auth/reducers/userReducer";
 import { map } from "lodash";
 import {IStore} from "../../mainReducer";
 import {useEffect} from "react";
-import {getPetsData} from "../redux/actions/getPetData";
+import {getPetsData} from "../pet/actions/getPetData";
 
 
 interface IProps {
