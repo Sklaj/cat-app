@@ -8,23 +8,23 @@ import {Redirect, Route, Switch} from "react-router-dom";
 import {UserDashboard} from "./ts/components/UserDashboard";
 import {AddPetView} from "./ts/components/pet/AddPetView";
 import {PetView} from "./ts/components/pet/PetView";
-import {auth} from "./firebase";
+import {auth, db} from "./firebase";
 
 
 export const App = () => {
     //Store data
     const profile: IUserProfile = useSelector((store: IStore) => store.userProfile);
-
     const dispatch = useDispatch();
+
     useEffect(() => {
         const setUser = (user: any) => {
             if (user) {
-                dispatch({
-                    type: "SET_PROFILE", profile: {
-                        ...user.data(),
-                        isAuthenticated: true
-                    }
-                });
+                db.collection("users").doc(user.uid).get()
+                    .then(user => {
+                        if (user) {
+                            dispatch({type: "SET_PROFILE", profile: {...user.data(), isAuthenticated: true}})
+                        }
+                    });
             }
         };
         const unsubscribe = auth.onAuthStateChanged(setUser);

@@ -11,7 +11,8 @@ export const setUserProfile = (dispatch: Dispatch) => {
                         isAuthenticated: true
                     }
                 });
-            })
+            });
+            localStorage.setItem("currentUser", user.uid);
         }
     });
 

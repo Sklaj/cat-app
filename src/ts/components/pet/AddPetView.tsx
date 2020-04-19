@@ -37,7 +37,7 @@ const AddPetViewC = (props: IProps) => {
                 pets: firebase.firestore.FieldValue.arrayUnion(petId)
             });
 
-            await dispatch({type: "ADD_PETS", pet: petId});
+            await dispatch({type: "ADD_PET", pet: petId});
         }
         setSubmitDone(true);
     };
