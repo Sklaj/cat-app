@@ -1,4 +1,4 @@
-import {auth, db} from "../../../../firebase";
+import {auth, db} from "../../../firebase";
 import {Dispatch} from "redux";
 
 export const setUserProfile = (dispatch: Dispatch) => {

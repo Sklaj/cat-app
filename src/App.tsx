@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import './css/App.scss';
 import {useDispatch, useSelector} from "react-redux";
-import {LoginView} from "./ts/components/auth/LoginView";
+import {LoginView} from "./ts/auth/LoginView";
 import {IStore} from "./mainReducer";
-import {IUserProfile} from "./ts/components/auth/reducers/userReducer";
+import {IUserProfile} from "./ts/auth/reducers/userReducer";
 import {Redirect, Route, Switch} from "react-router-dom";
-import {UserDashboard} from "./ts/components/UserDashboard";
-import {AddPetView} from "./ts/components/pet/AddPetView";
-import {PetView} from "./ts/components/pet/PetView";
+import {UserDashboard} from "./ts/user_dashboard/UserDashboard";
+import {AddPetView} from "./ts/pet/AddPetView";
+import {PetView} from "./ts/pet/PetView";
 import {auth, db} from "./firebase";
 
 
@@ -22,7 +22,13 @@ export const App = () => {
                 db.collection("users").doc(user.uid).get()
                     .then(user => {
                         if (user) {
-                            dispatch({type: "SET_PROFILE", profile: {...user.data(), isAuthenticated: true}})
+                            dispatch({
+                                type: "SET_PROFILE",
+                                profile: {
+                                    ...user.data(),
+                                    isAuthenticated: true
+                                }
+                            })
                         }
                     });
             }

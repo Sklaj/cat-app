@@ -1,13 +1,14 @@
 import * as React from "react";
 import {connect, useDispatch} from "react-redux";
-import {IStore} from "../../../mainReducer";
+import {IStore} from "../../mainReducer";
 import {IAddPetForm} from "./reducers/addPetFormReducer";
-import {db} from "../../../firebase";
+import {db} from "../../firebase";
 import { v4 as uuidv4 } from 'uuid';
 import {IUserProfile} from "../auth/reducers/userReducer";
 import {useState} from "react";
 import {Redirect} from "react-router";
 import firebase from "firebase";
+
 
 
 

@@ -1,4 +1,4 @@
-import {auth} from "../../../../firebase";
+import {auth} from "../../../firebase";
 
 export const authSignIn = (email: string, password: string) => {
     auth.signInWithEmailAndPassword(email, password)

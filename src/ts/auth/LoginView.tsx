@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {IStore} from "../../../mainReducer";
+import {IStore} from "../../mainReducer";
 import {ISignInForm} from "./reducers/signInFormReducer";
 import {Redirect} from "react-router-dom";
 import {authSignIn} from "./actions/auth_sign_in_email";
